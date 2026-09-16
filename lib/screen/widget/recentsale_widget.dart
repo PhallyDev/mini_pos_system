@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:mini_pos_system/screen/responsive.dart';
-
 class RecentsaleWidget extends StatelessWidget {
   const RecentsaleWidget({super.key});
 

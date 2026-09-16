@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mini_pos_system/screen/appcolors.dart';
 
 class Homescreenmedium extends StatelessWidget {
   const Homescreenmedium({super.key});
@@ -7,11 +8,11 @@ class Homescreenmedium extends StatelessWidget {
     return Container(
       height: 100,
       width: double.infinity,
-      decoration: BoxDecoration(color: const Color.fromARGB(255, 0, 0, 0)),
+      decoration: BoxDecoration(color: AppColors.background),
       child: Center(
         child: Text(
           "This app is not supported for  laptop or tablet screen. Please use a mobile device to access the app.",
-          style: TextStyle(color: Colors.white, fontSize: 30),
+          style: TextStyle(color: AppColors.textPrimary, fontSize: 30),
         ),
       ),
     );

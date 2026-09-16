@@ -5,6 +5,7 @@ import 'package:mini_pos_system/screen/responsive.dart';
 import 'package:mini_pos_system/config/routes/app_route.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:mini_pos_system/screen/appcolors.dart';
 // import 'package:supabase_flutter/supabase_flutter.dart';
 // import 'package:flutter_dotenv/flutter_dotenv.dart';
 // import 'package:shared_preferences/shared_preferences.dart';
@@ -28,6 +29,19 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       title: 'Flutter Demo',
+      theme: ThemeData(
+        scaffoldBackgroundColor: AppColors.background,
+        primaryColor: AppColors.primary,
+        colorScheme: ColorScheme.light(
+          primary: AppColors.primary,
+          surface: AppColors.surface,
+          error: AppColors.error,
+        ),
+        appBarTheme: const AppBarTheme(
+          backgroundColor: AppColors.primary,
+          foregroundColor: AppColors.surface,
+        ),
+      ),
       home: Responsive(),
       getPages: AppRoute.route,
       debugShowCheckedModeBanner: false,

@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:mini_pos_system/config/routes/app_route.dart';
 import 'package:mini_pos_system/controller/auth_controller.dart';
 import 'package:mini_pos_system/screen/responsive.dart';
+import 'package:mini_pos_system/screen/appcolors.dart';
 
 class LoginScreen extends GetView<AuthscreenController> {
   LoginScreen({super.key}) {
@@ -15,7 +16,7 @@ class LoginScreen extends GetView<AuthscreenController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 244, 244, 244),
+      backgroundColor: AppColors.background,
       body: _buildBody(),
     );
   }
@@ -30,7 +31,7 @@ class LoginScreen extends GetView<AuthscreenController> {
             height: Responsive.h(75),
 
             decoration: BoxDecoration(
-              color: Colors.blue.withAlpha(125),
+              color: AppColors.primary.withAlpha(125),
               borderRadius: BorderRadius.circular(50),
             ),
             child: Column(
@@ -41,7 +42,7 @@ class LoginScreen extends GetView<AuthscreenController> {
                   style: TextStyle(
                     fontSize: 24,
                     fontWeight: FontWeight.bold,
-                    color: Colors.white,
+                    color: AppColors.surface,
                   ),
                 ),
 
@@ -49,7 +50,7 @@ class LoginScreen extends GetView<AuthscreenController> {
                   width: double.infinity,
                   child: Text(
                     "                        please login to your account",
-                    style: TextStyle(fontSize: 16, color: Colors.white60),
+                    style: TextStyle(fontSize: 16, color: AppColors.surface.withAlpha(153)),
                   ),
                 ),
                 space,
@@ -112,7 +113,7 @@ class LoginScreen extends GetView<AuthscreenController> {
                             },
                             child: controller.isLoading.value
                                 ? const CircularProgressIndicator(
-                                    color: Colors.black,
+                                    color: AppColors.textPrimary,
                                   )
                                 : const Text("Login"),
                           ),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mini_pos_system/controller/product_controller.dart';
+import 'package:mini_pos_system/screen/appcolors.dart';
 
 class AddProductScreen extends GetView<ProductController> {
   AddProductScreen({super.key});
@@ -48,7 +49,7 @@ class AddProductScreen extends GetView<ProductController> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Add Product'),
-        backgroundColor: Colors.indigo,
+        backgroundColor: AppColors.primary,
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(20),

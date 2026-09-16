@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:mini_pos_system/config/routes/app_route.dart';
 import 'package:mini_pos_system/controller/product_controller.dart';
 import 'package:mini_pos_system/controller/sales_controller.dart';
+import 'package:mini_pos_system/screen/appcolors.dart';
 
 class Salesscreen extends StatelessWidget {
   Salesscreen({super.key});
@@ -13,13 +14,13 @@ class Salesscreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Sales"),backgroundColor: Colors.indigo,
+      appBar: AppBar(title: const Text("Sales"),backgroundColor: AppColors.primary,
       actions: [
         ElevatedButton(
-          style: ButtonStyle(backgroundColor:WidgetStatePropertyAll(Colors.white.withAlpha(100))),
+          style: ButtonStyle(backgroundColor:WidgetStatePropertyAll(AppColors.surface.withAlpha(100))),
           onPressed: ()=>Get.toNamed(AppRoute.saleHistory),
           child:Text("Sale History",
-          style:TextStyle(color:Colors.black,
+          style:TextStyle(color:AppColors.textPrimary,
         ),
         ))
       ],),
@@ -55,7 +56,7 @@ class Salesscreen extends StatelessWidget {
                           : Container(
                               width: 70,
                               height: 70,
-                              color: Colors.grey.shade300,
+                              color: AppColors.border,
                               child: const Icon(Icons.inventory),
                             ),
                     ),
@@ -83,8 +84,8 @@ class Salesscreen extends StatelessWidget {
                             "Stock: ${product.pQty}",
                             style: TextStyle(
                               color: product.pQty <= 5
-                                  ? Colors.red
-                                  : Colors.green,
+                                  ? AppColors.error
+                                  : AppColors.success,
                             ),
                           ),
 

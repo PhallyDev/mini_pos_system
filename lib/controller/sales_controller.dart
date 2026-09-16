@@ -1,4 +1,3 @@
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:mini_pos_system/model/sale_model.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -8,7 +7,7 @@ import 'product_controller.dart';
 class SaleController extends GetxController {
   final supabase = Supabase.instance.client;
   final ProductController productController = Get.find<ProductController>();
-
+  final user = Supabase.instance.client.auth.currentUser;
   final RxMap<String, int> selectedQty = <String, int>{}.obs;
   final RxBool isLoading = false.obs;
 
@@ -39,7 +38,7 @@ class SaleController extends GetxController {
       sales.value = response.map<Sale>((json) => Sale.fromJson(json)).toList();
     } catch (e) {
       Get.snackbar("Error", "$e");
-     // debugPrint("$e");
+      // debugPrint("$e");
     } finally {
       isLoadingSales.value = false;
     }
@@ -68,6 +67,7 @@ class SaleController extends GetxController {
       if (user == null) return;
 
       // 1. Insert sale
+
       await supabase.from('sales').insert({
         'user_id': user.id,
         'product_id': product.pid,
@@ -85,7 +85,7 @@ class SaleController extends GetxController {
 
       // 3. Refresh products
       await productController.getProducts();
-
+      await getSales();
       // 4. Reset quantity selector
       selectedQty[product.pid] = 1;
 

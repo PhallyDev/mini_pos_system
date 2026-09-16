@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mini_pos_system/screen/responsive.dart';
+import 'package:mini_pos_system/screen/appcolors.dart';
 
 class BottomnavbarWidget extends StatefulWidget {
   // ignore: strict_top_level_inference, prefer_typing_uninitialized_variables
@@ -28,7 +29,7 @@ class _BottomnavbarWidgetState extends State<BottomnavbarWidget> {
             height: Responsive.h(10), // previously 80
             width: double.infinity,
             decoration: BoxDecoration(
-              color: Colors.indigo,
+              color: AppColors.primary,
               borderRadius: BorderRadius.all(Radius.circular(25)),
             ),
           ),
@@ -44,7 +45,7 @@ class _BottomnavbarWidgetState extends State<BottomnavbarWidget> {
                       child: Icon(
                         logo[index],
                         size: 35,
-                        color: (index == widget.currentI ? Colors.black : Colors.grey),
+                        color: (index == widget.currentI ? AppColors.surface : AppColors.primaryLight),
                       ),
                       onTap: () => setState(() {
                         widget.onTap(index);

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mini_pos_system/screen/responsive.dart';
+import 'package:mini_pos_system/screen/responsive.dart';
 import 'package:mini_pos_system/controller/auth_controller.dart';
+import 'package:mini_pos_system/screen/appcolors.dart';
 
 class Signupscreen extends GetView<AuthscreenController> {
   Signupscreen({super.key}) {
@@ -26,7 +28,7 @@ class Signupscreen extends GetView<AuthscreenController> {
         height: Responsive.h(75),
         width: double.infinity,
         decoration: BoxDecoration(
-          color: Colors.blue.withAlpha(125),
+          color: AppColors.primary.withAlpha(125),
           borderRadius: BorderRadius.circular(50),
         ),
         child: Column(
@@ -37,7 +39,7 @@ class Signupscreen extends GetView<AuthscreenController> {
               style: TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.bold,
-                color: Colors.white70,
+                color: AppColors.surface.withAlpha(179),
               ),
             ),
             space,

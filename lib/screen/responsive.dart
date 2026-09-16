@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:mini_pos_system/controller/home_controller.dart';
 import 'package:mini_pos_system/screen/large/homescreenlarge.dart';
 import 'package:mini_pos_system/screen/medium/homescreenmedium.dart';
-import 'package:mini_pos_system/screen/small/dashboard.dart';
+import 'package:mini_pos_system/screen/small/splashscren.dart';
 
 class Responsive extends GetResponsiveView<HomeController> {
   Widget? small, medium, large;
@@ -14,7 +14,7 @@ class Responsive extends GetResponsiveView<HomeController> {
   static double h(double percentage) => Get.height * (percentage / 100);
   @override
   Widget? phone() {
-    return Dashboard();
+    return Splashscreen();
   }
 
   @override

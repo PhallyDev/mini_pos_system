@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mini_pos_system/controller/sales_controller.dart';
+import 'package:intl/intl.dart';
 
 class SaleHistoryScreen extends StatelessWidget {
   SaleHistoryScreen({super.key});
@@ -12,24 +13,16 @@ class SaleHistoryScreen extends StatelessWidget {
     controller.getSales();
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Sale History"),
-        centerTitle: true,
-      ),
+      appBar: AppBar(title: const Text("Sale History"), centerTitle: true),
 
       body: Obx(() {
         if (controller.isLoadingSales.value) {
-          return const Center(
-            child: CircularProgressIndicator(),
-          );
+          return const Center(child: CircularProgressIndicator());
         }
 
         if (controller.sales.isEmpty) {
           return const Center(
-            child: Text(
-              "No sales yet",
-              style: TextStyle(fontSize: 18),
-            ),
+            child: Text("No sales yet", style: TextStyle(fontSize: 18)),
           );
         }
 
@@ -42,20 +35,16 @@ class SaleHistoryScreen extends StatelessWidget {
 
             itemBuilder: (_, index) {
               final sale = controller.sales[index];
-
+              final date = sale.createdAt.toLocal();
               return Card(
                 margin: const EdgeInsets.only(bottom: 10),
 
                 child: ListTile(
-                  leading: const CircleAvatar(
-                    child: Icon(Icons.receipt),
-                  ),
+                  leading: const CircleAvatar(child: Icon(Icons.receipt)),
 
                   title: Text(
                     sale.productName,
-                    style: const TextStyle(
-                      fontWeight: FontWeight.bold,
-                    ),
+                    style: const TextStyle(fontWeight: FontWeight.bold),
                   ),
 
                   subtitle: Column(
@@ -63,13 +52,8 @@ class SaleHistoryScreen extends StatelessWidget {
                     children: [
                       const SizedBox(height: 5),
 
-                      Text(
-                        "${sale.qty} × \$${sale.price.toStringAsFixed(2)}",
-                      ),
-
-                      Text(
-                        _formatDate(sale.createdAt),
-                      ),
+                      Text("${sale.qty} × \$${sale.price.toStringAsFixed(2)}"),
+                      Text(DateFormat('dd/MM/yyyy HH:mm').format(date)),
                     ],
                   ),
 

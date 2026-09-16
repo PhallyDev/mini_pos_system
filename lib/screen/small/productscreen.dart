@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mini_pos_system/config/routes/app_route.dart';
 import 'package:mini_pos_system/controller/product_controller.dart';
+import 'package:mini_pos_system/screen/appcolors.dart';
 import 'package:mini_pos_system/screen/small/editproductscreen.dart';
 import '../widget/searchbar_widget.dart';
 
@@ -22,7 +23,7 @@ class Productscreen extends StatelessWidget {
             },
           ),
         ],
-        backgroundColor: Colors.indigo,
+        backgroundColor: AppColors.primary,
       ),
 
       body: RefreshIndicator(
@@ -48,12 +49,13 @@ class Productscreen extends StatelessWidget {
                       return Card(
                         child: ListTile(
                           title: Text(p.pName),
-                          subtitle: Text("Stock: ${p.pQty}"),
+                          subtitle: Text("Stock: ${p.pQty}",
+                          style: TextStyle(color:p.pQty>=5? AppColors.textSecondary : AppColors.error),),
         
                           trailing: Row(
                             mainAxisSize: MainAxisSize.min,
                             children: [
-                              Text("\$${p.pPrice}"),
+                              Text("\$${p.pPrice}",),
         
                               const SizedBox(width: 10),
         
@@ -87,13 +89,13 @@ class Productscreen extends StatelessWidget {
         
                                               await controller.deleteProduct(p.pid);
                                             },
-                                            child: const Text('Delete',style: TextStyle(color: Colors.red),),
+                                            child: const Text('Delete',style: TextStyle(color: AppColors.error),),
                                           ),
                                         ],
                                       ),
                                     );
                                         },
-                                    icon: const Icon(Icons.delete,color:Colors.red,),
+                                    icon: const Icon(Icons.delete,color:AppColors.error,),
                                   ),  
                             ],
                           ),

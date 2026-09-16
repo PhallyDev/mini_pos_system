@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:mini_pos_system/controller/product_controller.dart';
+import 'package:mini_pos_system/screen/appcolors.dart';
 
 class LowStockWidget extends StatelessWidget {
   LowStockWidget({super.key});
@@ -21,7 +21,7 @@ class LowStockWidget extends StatelessWidget {
               children: [
                 Icon(
                   Icons.warning_amber_rounded,
-                  color: Colors.orange,
+                  color: AppColors.warning,
                 ),
                 SizedBox(width: 8),
                 Text(
@@ -65,7 +65,7 @@ Obx(() {
       subtitle: Text("$quantity items left"),
       trailing: const Icon(
         Icons.warning_amber_rounded,
-        color: Colors.orange,
+        color: AppColors.warning,
       ),
     );
   }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mini_pos_system/controller/product_controller.dart';
 import 'package:mini_pos_system/model/product_model.dart';
+import 'package:mini_pos_system/screen/appcolors.dart';
 
 class EditProductScreen extends StatelessWidget {
   Product product;
@@ -22,7 +23,7 @@ class EditProductScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.indigo,
+        backgroundColor: AppColors.primary,
         title: const Text('Edit Product')),
 
       body: Padding(
