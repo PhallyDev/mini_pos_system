@@ -1,3 +1,6 @@
+import 'dart:async';
+import 'dart:io';
+
 import 'package:get/get.dart';
 import 'package:mini_pos_system/model/sale_model.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -13,12 +16,59 @@ class SaleController extends GetxController {
 
   int getQty(String productId) => selectedQty[productId] ?? 1;
   final RxList<Sale> sales = <Sale>[].obs;
-
+  final recentsale = <Sale>[].obs;
   final isLoadingSales = false.obs;
   @override
-  void onInit() {
+  void onInit() async {
     super.onInit();
-    getSales();
+    await getSales();
+    await fetchRecentSale();
+  }
+
+  Future<void> fetchRecentSale() async {
+    if (user == null) return;
+
+    try {
+      final data = await supabase
+          .from('sales')
+          .select()
+          .eq('user_id', user!.id)
+          .order('create_at', ascending: false)
+          .limit(3);
+
+      recentsale.value = (data as List).map((e) => Sale.fromJson(e)).toList();
+    } on PostgrestException catch (e) {
+      String message;
+
+      switch (e.code) {
+        case 'PGRST301': // Unauthorized
+          message = "Please log in again.";
+          break;
+        case 'PGRST116': // No rows found (when using .single())
+          message = "No recent sales found.";
+          break;
+        case '23505': // Duplicate
+          message = "Duplicate data.";
+          break;
+        case '23503': // Foreign key
+          message = "Related data is missing.";
+          break;
+        case '42501': // RLS/Permission denied
+          message = "You don't have permission.";
+          break;
+        default:
+          message = e.message;
+      }
+
+      Get.snackbar("Database Error", message);
+    } on SocketException {
+      Get.snackbar("No Internet", "Check your connection.");
+    } on TimeoutException {
+      Get.snackbar("Timeout", "Server took too long to respond.");
+    } catch (e) {
+      Get.snackbar("Error", "Something went wrong.");
+      print(e);
+    }
   }
 
   Future<void> getSales() async {
@@ -86,6 +136,7 @@ class SaleController extends GetxController {
       // 3. Refresh products
       await productController.getProducts();
       await getSales();
+      await fetchRecentSale();
       // 4. Reset quantity selector
       selectedQty[product.pid] = 1;
 

@@ -51,7 +51,6 @@ class SaleHistoryScreen extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       const SizedBox(height: 5),
-
                       Text("${sale.qty} × \$${sale.price.toStringAsFixed(2)}"),
                       Text(DateFormat('dd/MM/yyyy HH:mm').format(date)),
                     ],
@@ -72,7 +71,7 @@ class SaleHistoryScreen extends StatelessWidget {
       }),
     );
   }
-
+  
   String _formatDate(DateTime date) {
     return "${date.day}/${date.month}/${date.year} "
         "${date.hour.toString().padLeft(2, '0')}:"

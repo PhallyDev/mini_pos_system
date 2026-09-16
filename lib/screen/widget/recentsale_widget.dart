@@ -1,93 +1,92 @@
 import 'package:flutter/material.dart';
-class RecentsaleWidget extends StatelessWidget {
-  const RecentsaleWidget({super.key});
+import 'package:get/get.dart';
+import 'package:intl/intl.dart';
+import 'package:mini_pos_system/controller/sales_controller.dart';
 
+class RecentsaleWidget extends StatelessWidget {
+  RecentsaleWidget({super.key});
+  final SaleController controller = Get.put(SaleController());
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(8),
-      child:Container(
-        width:double.infinity,
-        decoration:BoxDecoration(
+      child: Container(
+        width: double.infinity,
+        decoration: BoxDecoration(
           boxShadow: [
             BoxShadow(
               color: const Color.fromARGB(255, 1, 0, 0).withValues(alpha: 0.2),
               spreadRadius: 2,
               blurRadius: 5,
-              offset: Offset(0, 3), // changes position of shadow
+              offset: const Offset(0, 3),
             ),
           ],
         ),
-      
         child: Card(
           child: Padding(
             padding: const EdgeInsets.all(20),
-            child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+            child: Obx(() {
+              if (controller.recentsale.isEmpty) {
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: const [
+                    Text(
+                      "Recent Sales",
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    SizedBox(height: 20),
+                    Center(child: Text("No recent sales")),
+                  ],
+                );
+              }
 
-        children: [
-          const Text(
-            "Recent Sales",
-            style: TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-        
-          const SizedBox(height: 15),
-        
-          ListTile(
-            contentPadding: EdgeInsets.zero,
-            leading: const CircleAvatar(
-              child: Icon(Icons.shopping_cart),
-            ),
-            title: const Text("Coca Cola"),
-            subtitle: const Text("2 items • Today"),
-            trailing: const Text(
-              "\$3.00",
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          ),
-        
-          const Divider(),
-        
-          ListTile(
-            contentPadding: EdgeInsets.zero,
-            leading: const CircleAvatar(
-              child: Icon(Icons.shopping_cart),
-            ),
-            title: const Text("Pepsi"),
-            subtitle: const Text("1 item • Today"),
-            trailing: const Text(
-              "\$1.50",
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          ),
-        
-          const Divider(),
-        
-          ListTile(
-            contentPadding: EdgeInsets.zero,
-            leading: const CircleAvatar(
-              child: Icon(Icons.shopping_cart),
-            ),
-            title: const Text("Water"),
-            subtitle: const Text("3 items • Today"),
-            trailing: const Text(
-              "\$3.00",
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          ),
-        ],
-            ),
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text(
+                    "Recent Sales",
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  const SizedBox(height: 15),
+
+                  ListView.separated(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemCount: controller.recentsale.length,
+                    separatorBuilder: (_, __) => const Divider(),
+                    itemBuilder: (context, index) {
+                      final sale = controller.recentsale[index];
+
+                      return ListTile(
+                        contentPadding: EdgeInsets.zero,
+                        leading: const CircleAvatar(
+                          child: Icon(Icons.shopping_cart),
+                        ),
+                        title: Text(sale.productName),
+                        subtitle: Text(
+                          "${sale.qty} item(s) • ${DateFormat('MMM d, HH:mm').format(sale.createdAt)}",
+                        ),
+                        trailing: Text(
+                          "\$${sale.total.toStringAsFixed(2)}",
+                          style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+                ],
+              );
+            }),
           ),
         ),
-      ));
+      ),
+    );
   }
 }

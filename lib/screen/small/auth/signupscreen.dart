@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mini_pos_system/screen/responsive.dart';
-import 'package:mini_pos_system/screen/responsive.dart';
 import 'package:mini_pos_system/controller/auth_controller.dart';
 import 'package:mini_pos_system/screen/appcolors.dart';
 
