@@ -4,6 +4,7 @@ import 'package:mini_pos_system/config/routes/app_route.dart';
 import 'package:mini_pos_system/controller/product_controller.dart';
 import 'package:mini_pos_system/controller/sales_controller.dart';
 import 'package:mini_pos_system/screen/appcolors.dart';
+import 'package:mini_pos_system/screen/widget/searchbar_widget.dart';
 
 class Salesscreen extends StatelessWidget {
   Salesscreen({super.key});
@@ -23,7 +24,9 @@ class Salesscreen extends StatelessWidget {
           style:TextStyle(color:AppColors.textPrimary,
         ),
         ))
-      ],),
+      ],
+      bottom:PreferredSize(preferredSize:Size.fromHeight(70), child:SearchbarWidget()),
+      ),
       body: Obx(() {
         if (productController.products.isEmpty) {
           return const Center(child: Text("No products available."));
@@ -31,9 +34,9 @@ class Salesscreen extends StatelessWidget {
 
         return ListView.builder(
           padding: const EdgeInsets.all(12),
-          itemCount: productController.products.length,
+          itemCount: productController.filteredProducts.length,
           itemBuilder: (_, index) {
-            final product = productController.products[index];
+            final product = productController.filteredProducts[index];
 
             return Card(
               elevation: 3,

@@ -6,9 +6,11 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 class ProductController extends GetxController {
   final supabase = Supabase.instance.client;
   final products = <Product>[].obs;
+  final RxString searchQuery = ''.obs;
   List<Product> get lowStockProducts {
-  return products.where((product) => product.pQty <= 5).toList();
-}
+    return products.where((product) => product.pQty <= 5).toList();
+  }
+
   final isLoading = false.obs;
   @override
   void onInit() {
@@ -17,22 +19,18 @@ class ProductController extends GetxController {
   }
 
   Future<void> editProduct({
-  required String pid,
-  required String name,
-  required double price,
-  required int qty,
-}) async {
-  await supabase
-      .from('products')
-      .update({
-        'pname': name,
-        'pprice': price,
-        'pqty': qty,
-      })
-      .eq('pid', pid);
+    required String pid,
+    required String name,
+    required double price,
+    required int qty,
+  }) async {
+    await supabase
+        .from('products')
+        .update({'pname': name, 'pprice': price, 'pqty': qty})
+        .eq('pid', pid);
 
-  await getProducts();
-}
+    await getProducts();
+  }
 
   Future<void> getProducts() async {
     isLoading.value = true;
@@ -49,43 +47,40 @@ class ProductController extends GetxController {
     }
   }
 
- Future<void> addProduct({
-  required String name,
-  required double price,
-  required int qty,
-}) async {
-  final userId = supabase.auth.currentUser!.id;
+  Future<void> addProduct({
+    required String name,
+    required double price,
+    required int qty,
+  }) async {
+    final userId = supabase.auth.currentUser!.id;
 
-  final existingProduct = await supabase
-      .from('products')
-      .select()
-      .eq('user_id', userId)
-      .eq('pname', name)
-      .maybeSingle();
-
-  if (existingProduct != null) {
-    // Product already exists
-    final currentQty = existingProduct['pqty'] as int;
-
-    await supabase
+    final existingProduct = await supabase
         .from('products')
-        .update({
-          'pqty': currentQty + qty,
-        })
-        .eq('pid', existingProduct['pid']);
-  } else {
-    // Product doesn't exist
-    await supabase.from('products').insert({
-      'user_id': userId,
-      'pname': name,
-      'pprice': price,
-      'pqty': qty,
-      
-    });
-  }
+        .select()
+        .eq('user_id', userId)
+        .eq('pname', name)
+        .maybeSingle();
 
-  await getProducts();
-}
+    if (existingProduct != null) {
+      // Product already exists
+      final currentQty = existingProduct['pqty'] as int;
+
+      await supabase
+          .from('products')
+          .update({'pqty': currentQty + qty})
+          .eq('pid', existingProduct['pid']);
+    } else {
+      // Product doesn't exist
+      await supabase.from('products').insert({
+        'user_id': userId,
+        'pname': name,
+        'pprice': price,
+        'pqty': qty,
+      });
+    }
+
+    await getProducts();
+  }
 
   Future<void> updateProduct(Product product) async {
     await supabase
@@ -104,5 +99,21 @@ class ProductController extends GetxController {
     await supabase.from('products').delete().eq('pid', pid);
 
     await getProducts();
+  }
+
+  List<Product> get filteredProducts {
+    if (searchQuery.value.isEmpty) {
+      return products;
+    }
+
+    return products.where((product) {
+      return product.pName.toLowerCase().contains(
+        searchQuery.value.toLowerCase(),
+      );
+    }).toList();
+  }
+
+  void updateSearch(String value) {
+    searchQuery.value = value;
   }
 }

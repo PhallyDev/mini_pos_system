@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:mini_pos_system/controller/product_controller.dart';
 import 'package:mini_pos_system/screen/responsive.dart';
+import 'package:get/get.dart';
 
-class SearchbarWidget extends StatefulWidget {
-  const SearchbarWidget({super.key});
-
-  @override
-  State<SearchbarWidget> createState() => _SearchbarWidgetState();
-}
-class _SearchbarWidgetState extends State<SearchbarWidget> {
+class SearchbarWidget extends StatelessWidget {
+  SearchbarWidget({super.key});
+  final controller = Get.put(ProductController());
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -24,7 +22,8 @@ class _SearchbarWidgetState extends State<SearchbarWidget> {
           ),
         ],
       ),
-      child: const TextField(
+      child:  TextField(
+        onChanged: controller.updateSearch,
         decoration: InputDecoration(
           hintText: "Search",
           prefixIcon: Icon(Icons.search),

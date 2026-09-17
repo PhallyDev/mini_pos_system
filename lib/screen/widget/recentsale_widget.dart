@@ -59,7 +59,7 @@ class RecentsaleWidget extends StatelessWidget {
                     shrinkWrap: true,
                     physics: const NeverScrollableScrollPhysics(),
                     itemCount: controller.recentsale.length,
-                    separatorBuilder: (_, __) => const Divider(),
+                    separatorBuilder: (_, _) => const Divider(),
                     itemBuilder: (context, index) {
                       final sale = controller.recentsale[index];
 

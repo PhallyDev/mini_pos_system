@@ -24,6 +24,10 @@ class Productscreen extends StatelessWidget {
           ),
         ],
         backgroundColor: AppColors.primary,
+        bottom: PreferredSize(
+          preferredSize: Size.fromHeight(70),
+          child: SearchbarWidget(),
+        ),
       ),
 
       body: RefreshIndicator(
@@ -33,70 +37,83 @@ class Productscreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SearchbarWidget(),
-              const SizedBox(height: 10),
               Expanded(
                 child: Obx(() {
                   if (controller.isLoading.value) {
                     return const Center(child: CircularProgressIndicator());
                   }
-        
+
                   return ListView.builder(
-                    itemCount: controller.products.length,
+                    itemCount: controller.filteredProducts.length,
                     itemBuilder: (_, index) {
-                      final p = controller.products[index];
-        
+                      final product = controller.filteredProducts[index];
                       return Card(
                         child: ListTile(
-                          title: Text(p.pName),
-                          subtitle: Text("Stock: ${p.pQty}",
-                          style: TextStyle(color:p.pQty>=5? AppColors.textSecondary : AppColors.error),),
-        
+                          title: Text(product.pName),
+                          subtitle: Text(
+                            "Stock: ${product.pQty}",
+                            style: TextStyle(
+                              color: product.pQty >= 5
+                                  ? AppColors.textSecondary
+                                  : AppColors.error,
+                            ),
+                          ),
+
                           trailing: Row(
                             mainAxisSize: MainAxisSize.min,
                             children: [
-                              Text("\$${p.pPrice}",),
-        
+                              Text("\$${product.pPrice}"),
+
                               const SizedBox(width: 10),
-        
+
                               // Edit
                               IconButton(
                                 onPressed: () {
-                                  Get.to(() => EditProductScreen(product: p));
+                                  Get.to(() => EditProductScreen(product: product));
                                 },
                                 icon: const Icon(Icons.edit),
                               ),
-        
+
                               // Delete
                               IconButton(
                                 onPressed: () {
-                                    Get.dialog(
-                                      AlertDialog(
-                                        title: const Text('Delete Product',),
-                                        content: const Text(
-                                          'Are you sure to delete this product?',
-                                        ),
-                                        actions: [
-                                          TextButton(
-                                            onPressed: () {
-                                              Get.back(); // Cancel
-                                            },
-                                            child: const Text('Cancel'),
-                                          ),
-                                          TextButton(
-                                            onPressed: () async {
-                                              Get.back(); // Close dialog
-        
-                                              await controller.deleteProduct(p.pid);
-                                            },
-                                            child: const Text('Delete',style: TextStyle(color: AppColors.error),),
-                                          ),
-                                        ],
+                                  Get.dialog(
+                                    AlertDialog(
+                                      title: const Text('Delete Product'),
+                                      content: const Text(
+                                        'Are you sure to delete this product?',
                                       ),
-                                    );
-                                        },
-                                    icon: const Icon(Icons.delete,color:AppColors.error,),
-                                  ),  
+                                      actions: [
+                                        TextButton(
+                                          onPressed: () {
+                                            Get.back(); // Cancel
+                                          },
+                                          child: const Text('Cancel'),
+                                        ),
+                                        TextButton(
+                                          onPressed: () async {
+                                            Get.back(); // Close dialog
+
+                                            await controller.deleteProduct(
+                                              product.pid,
+                                            );
+                                          },
+                                          child: const Text(
+                                            'Delete',
+                                            style: TextStyle(
+                                              color: AppColors.error,
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  );
+                                },
+                                icon: const Icon(
+                                  Icons.delete,
+                                  color: AppColors.error,
+                                ),
+                              ),
                             ],
                           ),
                         ),
@@ -106,7 +123,7 @@ class Productscreen extends StatelessWidget {
                 }),
               ),
               const SizedBox(height: 10),
-              Text("${controller.products.length} product")
+              Text("${controller.products.length} product"),
             ],
           ),
         ),
