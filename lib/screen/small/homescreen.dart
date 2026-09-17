@@ -14,6 +14,14 @@ class HomescreenWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar:AppBar(
+        title:Text("Home Screen"),
+        bottom:PreferredSize(preferredSize:Size.fromHeight(70), child: InkWell(
+            child: NameshopWidget(),
+            onTap: () => Get.toNamed(AppRoute.changename),
+          ),
+      ),
+      ),
       backgroundColor: const Color.fromARGB(255, 244, 244, 244),
       body: _buildBody(),
     );
@@ -25,11 +33,7 @@ class HomescreenWidget extends StatelessWidget {
       child: ListView(
         scrollDirection: Axis.vertical,
         children: [
-          InkWell(
-            child: NameshopWidget(),
-            onTap: () => Get.toNamed(AppRoute.changename),
-          ),
-      
+          
           TodaysaleWidget(),
           InkWell(child: RecentsaleWidget(),onTap: ()=>Get.toNamed(AppRoute.saleHistory),),
           InkWell(child: LowStockWidget(),onTap: ()=>Get.toNamed(AppRoute.productScreen),)
