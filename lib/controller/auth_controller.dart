@@ -198,5 +198,33 @@ class AuthscreenController extends GetxController {
       isLoading.value = false;
     }
   }
+
+
+  ///////////////////////
+  /// Forgot password
+  /// //////////////////
+  Future<void> resetPassword(String email) async {
+  try {
+    await _supabase.auth.resetPasswordForEmail(
+      email,
+      redirectTo: 'io.supabase.flutter://reset-password',
+    );
+
+    Get.snackbar(
+      'Success',
+      'Password reset email sent.',
+      snackPosition: SnackPosition.BOTTOM,
+    );
+  } catch (e) {
+    Get.snackbar(
+      'Error',
+      e.toString(),
+      snackPosition: SnackPosition.BOTTOM,
+    );
+  }
+}
+    
+
+
 }
 

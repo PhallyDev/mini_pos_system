@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:mini_pos_system/screen/responsive.dart';
 import 'package:mini_pos_system/controller/auth_controller.dart';
 import 'package:mini_pos_system/screen/appcolors.dart';
-
+import 'package:mini_pos_system/config/routes/app_route.dart';
 class Signupscreen extends GetView<AuthscreenController> {
   Signupscreen({super.key}) {
     Get.put(AuthscreenController());
@@ -27,9 +27,16 @@ class Signupscreen extends GetView<AuthscreenController> {
         height: Responsive.h(75),
         width: double.infinity,
         decoration: BoxDecoration(
-          color: AppColors.primary.withAlpha(125),
-          borderRadius: BorderRadius.circular(50),
-        ),
+              color: AppColors.background,
+              borderRadius: BorderRadius.circular(50),
+              boxShadow:[
+                  BoxShadow(
+              color: const Color.fromARGB(255, 1, 0, 0).withValues(alpha: 0.2),
+               spreadRadius: 2,
+               blurRadius: 5,
+                )
+              ]
+            ),
         child: Column(
           children: [
             space,
@@ -38,7 +45,7 @@ class Signupscreen extends GetView<AuthscreenController> {
               style: TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.bold,
-                color: AppColors.surface.withAlpha(179),
+                color: AppColors.textPrimary,
               ),
             ),
             space,
@@ -133,9 +140,25 @@ class Signupscreen extends GetView<AuthscreenController> {
                             );
                           }
                         },
-                        child: Text("Signup"),
+                        child: Text("Signup",style: TextStyle(color:AppColors.primaryLight),),
+                         style: ButtonStyle(backgroundColor:WidgetStatePropertyAll(AppColors.primary) ),
                       ),
                     ),
+                    space,
+                    SingleChildScrollView(
+                          child: Row(
+                            children: [
+                              SizedBox(width: Responsive.w(20)),
+                              Text(" Have an account?",style: TextStyle(color: AppColors.textPrimary),),
+                              TextButton(
+                                onPressed: () {
+                                  Get.toNamed(AppRoute.loginScreen);
+                                },
+                                child: Text("Sign in",style: TextStyle(color: AppColors.primaryDark),),
+                              ),
+                            ],
+                          ),
+                        ),
                   ],
                 ),
               ),

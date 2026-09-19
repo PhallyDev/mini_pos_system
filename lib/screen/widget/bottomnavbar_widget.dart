@@ -22,11 +22,11 @@ class _BottomnavbarWidgetState extends State<BottomnavbarWidget> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: Responsive.h(10), // previously 80
+      height: Responsive.h(10),
       child: Stack(
         children: [
           Container(
-            height: Responsive.h(10), // previously 80
+            height: Responsive.h(10), 
             width: double.infinity,
             decoration: BoxDecoration(
               color: AppColors.primary,
@@ -37,6 +37,7 @@ class _BottomnavbarWidgetState extends State<BottomnavbarWidget> {
             children: [
               SizedBox(height: Responsive.h(2.5)), // previously 20
               Row(
+                mainAxisAlignment:MainAxisAlignment.values[0],
                 children: List.generate(
                   logo.length,
                   (index) => Padding(
@@ -45,7 +46,7 @@ class _BottomnavbarWidgetState extends State<BottomnavbarWidget> {
                       child: Icon(
                         logo[index],
                         size: 35,
-                        color: (index == widget.currentI ? AppColors.surface : AppColors.primaryLight),
+                        color: (index == widget.currentI ? AppColors.surface : AppColors.textMuted),
                       ),
                       onTap: () => setState(() {
                         widget.onTap(index);

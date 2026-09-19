@@ -31,8 +31,15 @@ class LoginScreen extends GetView<AuthscreenController> {
             height: Responsive.h(75),
 
             decoration: BoxDecoration(
-              color: AppColors.primary.withAlpha(125),
+              color: AppColors.background,
               borderRadius: BorderRadius.circular(50),
+              boxShadow:[
+                  BoxShadow(
+              color: const Color.fromARGB(255, 1, 0, 0).withValues(alpha: 0.2),
+               spreadRadius: 2,
+               blurRadius: 5,
+                )
+              ]
             ),
             child: Column(
               children: [
@@ -42,7 +49,7 @@ class LoginScreen extends GetView<AuthscreenController> {
                   style: TextStyle(
                     fontSize: 24,
                     fontWeight: FontWeight.bold,
-                    color: AppColors.surface,
+                    color: AppColors.textPrimary,
                   ),
                 ),
 
@@ -50,7 +57,7 @@ class LoginScreen extends GetView<AuthscreenController> {
                   width: double.infinity,
                   child: Text(
                     "                        please login to your account",
-                    style: TextStyle(fontSize: 16, color: AppColors.surface.withAlpha(153)),
+                    style: TextStyle(fontSize: 16, color: AppColors.textPrimary.withAlpha(153)),
                   ),
                 ),
                 space,
@@ -103,6 +110,10 @@ class LoginScreen extends GetView<AuthscreenController> {
                           },
                         ),
                         space,
+                        InkWell(
+                          onTap:()=>Get.toNamed(AppRoute.forgotpasswordscreen),
+                          child: Text('forgot password?',style: TextStyle(color:AppColors.primaryDark),)),
+                        space,
                         SizedBox(
                           width: Responsive.w(40),
                           child: ElevatedButton(
@@ -111,25 +122,27 @@ class LoginScreen extends GetView<AuthscreenController> {
                                 controller.login(email.text, password.text);
                               }
                             },
+                            style:ButtonStyle( backgroundColor: WidgetStatePropertyAll(AppColors.primary)),
                             child: controller.isLoading.value
                                 ? const CircularProgressIndicator(
                                     color: AppColors.textPrimary,
                                   )
-                                : const Text("Login"),
+                                : const Text("Login",style: TextStyle(color:AppColors.background),),
                           ),
+                        
                         ),
-                        space,
+                       
                         space,
                         SingleChildScrollView(
                           child: Row(
                             children: [
                               SizedBox(width: Responsive.w(20)),
-                              Text("Don't have account?"),
+                              Text("Don't have account?",style: TextStyle(color: AppColors.textPrimary),),
                               TextButton(
                                 onPressed: () {
                                   Get.toNamed(AppRoute.signup);
                                 },
-                                child: Text("Register"),
+                                child: Text("Register",style: TextStyle(color: AppColors.primaryDark),),
                               ),
                             ],
                           ),
