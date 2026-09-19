@@ -48,7 +48,27 @@ class Productscreen extends StatelessWidget {
                     itemBuilder: (_, index) {
                       final product = controller.filteredProducts[index];
                       return Card(
+                        
                         child: ListTile(
+                          leading:ClipRRect(
+                              borderRadius: BorderRadius.circular(8),
+                              child: product.imageUrl != null && product.imageUrl!.isNotEmpty
+                               ? Image.network(
+                                      product.imageUrl!,
+                                      width: 55,
+                                      height: 55,
+                                      fit: BoxFit.cover,
+                                      errorBuilder: (context, error, stackTrace) {
+                                        return const Icon(Icons.image_not_supported);
+                                      },
+                                 )
+                                : Container(
+                                    width: 55,
+                                    height: 55,
+                                    color: Colors.grey.shade200,
+                                    child: const Icon(Icons.image),
+                                  ),
+                        ),
                           title: Text(product.pName),
                           subtitle: Text(
                             "Stock: ${product.pQty}",
@@ -95,7 +115,7 @@ class Productscreen extends StatelessWidget {
                                             Get.back(); // Close dialog
 
                                             await controller.deleteProduct(
-                                              product.pid,
+                                              product,
                                             );
                                           },
                                           child: const Text(

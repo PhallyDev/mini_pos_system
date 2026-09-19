@@ -118,7 +118,6 @@ class SaleController extends GetxController {
       if (user == null) return;
 
       // 1. Insert sale
-
       await supabase.from('sales').insert({
         'user_id': user.id,
         'product_id': product.pid,
@@ -126,6 +125,7 @@ class SaleController extends GetxController {
         'qty': qty,
         'price': product.pPrice,
         'total': product.pPrice * qty,
+        'imageurl': product.imageUrl,
       });
 
       // 2. Update stock

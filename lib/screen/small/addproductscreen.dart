@@ -23,6 +23,8 @@ class AddProductScreen extends GetView<ProductController> {
       name: nameController.text.trim(),
       price: double.parse(priceController.text.trim()),
       qty: int.parse(qtyController.text.trim()),
+      imageFile: controller.selectedImage.value
+
     );
 
     debugPrint('Product added successfully');
@@ -140,6 +142,29 @@ class AddProductScreen extends GetView<ProductController> {
                   return null;
                 },
               ),
+              SizedBox(height: 16),
+              Obx(() {
+  return GestureDetector(
+    onTap: controller.pickImage,
+    child: Container(
+      height: 100,
+      width: 100,
+      decoration: BoxDecoration(
+        border: Border.all(color: Colors.grey),
+        borderRadius: BorderRadius.circular(12),
+      ),
+      child: controller.selectedImage.value != null
+          ? ClipRRect(
+              borderRadius: BorderRadius.circular(12),
+              child: Image.file(
+                controller.selectedImage.value!,
+                fit: BoxFit.cover,
+              ),
+            )
+          : const Icon(Icons.add_a_photo, size: 40),
+          ),
+          );
+        }),
 
               const SizedBox(height: 30),
 

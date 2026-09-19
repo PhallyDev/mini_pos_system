@@ -26,7 +26,6 @@ class HomescreenWidget extends StatelessWidget {
       body: _buildBody(),
     );
   }
-
   Widget _buildBody() {
     return RefreshIndicator(
       onRefresh:controller.getTodaySales,

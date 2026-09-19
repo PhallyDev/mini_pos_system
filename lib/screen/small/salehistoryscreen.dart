@@ -40,7 +40,13 @@ class SaleHistoryScreen extends StatelessWidget {
                 margin: const EdgeInsets.only(bottom: 10),
 
                 child: ListTile(
-                  leading: const CircleAvatar(child: Icon(Icons.receipt)),
+                  leading:  CircleAvatar(radius: 28,
+                            backgroundImage: sale.imageUrl != null && sale.imageUrl!.isNotEmpty
+                                             ? NetworkImage(sale.imageUrl!)
+                                                : null,
+                                        child: sale.imageUrl == null || sale.imageUrl!.isEmpty
+                                            ? const Icon(Icons.image)
+                                            : null,),
 
                   title: Text(
                     sale.productName,

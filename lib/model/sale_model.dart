@@ -7,7 +7,7 @@ class Sale {
   final double price;
   final double total;
   final DateTime createdAt;
-
+   final String? imageUrl;
   Sale({
     required this.sid,
     required this.userId,
@@ -16,7 +16,9 @@ class Sale {
     required this.qty,
     required this.price,
     required this.total,
-    required this.createdAt,
+    required this.createdAt, 
+    required this.imageUrl,
+    
   });
 
   factory Sale.fromJson(Map<String, dynamic> json) {
@@ -29,6 +31,7 @@ class Sale {
       price: (json['price'] as num).toDouble(),
       total: (json['total'] as num).toDouble(),
       createdAt: DateTime.parse(json['create_at']),
+      imageUrl: json['imageurl'],
     );
   }
 }

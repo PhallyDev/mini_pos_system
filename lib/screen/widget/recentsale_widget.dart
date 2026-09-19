@@ -65,9 +65,15 @@ class RecentsaleWidget extends StatelessWidget {
 
                       return ListTile(
                         contentPadding: EdgeInsets.zero,
-                        leading: const CircleAvatar(
-                          child: Icon(Icons.shopping_cart),
-                        ),
+                        leading: CircleAvatar(
+                        radius: 28,
+                        backgroundImage:sale.imageUrl != null && sale.imageUrl!.isNotEmpty
+                                ? NetworkImage(sale.imageUrl!)
+                                : null,
+                        child: sale.imageUrl == null || sale.imageUrl!.isEmpty
+                            ? const Icon(Icons.image)
+                            : null,
+                      ),
                         title: Text(sale.productName),
                         subtitle: Text(
                           "${sale.qty} item(s) • ${DateFormat('MMM d, HH:mm').format(sale.createdAt)}",

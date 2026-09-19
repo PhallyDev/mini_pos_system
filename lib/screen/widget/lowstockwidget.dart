@@ -60,7 +60,6 @@ Obx(() {
   Widget _productItem(String name, int quantity) {
     return ListTile(
       contentPadding: EdgeInsets.zero,
-      leading: const Icon(Icons.inventory_2_outlined),
       title: Text(name),
       subtitle: Text("$quantity items left"),
       trailing: const Icon(
